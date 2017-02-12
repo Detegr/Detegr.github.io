@@ -9,8 +9,10 @@
 
     <title>ctrlc::set_handler - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
+    
 
     
     
@@ -46,12 +48,12 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-25' class='srclink' href='../src/ctrlc/src/lib.rs.html#80-84' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn set_handler&lt;F&gt;(user_handler: F) <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>() -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a> + 'static + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a></span></pre><div class='docblock'><p>Sets up the signal handler for Ctrl-C using default polling rate of 100ms.</p>
+               </span><a class='srclink' href='../src/ctrlc/lib.rs.html#176-197' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn set_handler&lt;F&gt;(user_handler: F) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../ctrlc/enum.Error.html' title='ctrlc::Error'>Error</a>&gt; <span class='where fmt-newline'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>() -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a> + 'static + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a></span></pre><div class='docblock'><p>Sets up the signal handler for Ctrl-C.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
 <pre class='rust rust-example-rendered'>
-<span class='ident'>ctrlc</span>::<span class='ident'>set_handler</span>(<span class='op'>||</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Hello world!&quot;</span>));</pre>
+<span class='ident'>ctrlc</span>::<span class='ident'>set_handler</span>(<span class='op'>||</span> <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Hello world!&quot;</span>)).<span class='ident'>expect</span>(<span class='string'>&quot;Error setting Ctrl-C handler&quot;</span>);</pre>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -75,6 +77,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -106,11 +110,9 @@
     <script>
         window.rootPath = "../";
         window.currentCrate = "ctrlc";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>

@@ -9,8 +9,10 @@
 
     <title>ctrlc - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
+    
 
     
     
@@ -46,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/ctrlc/src/lib.rs.html#10-115' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/ctrlc/lib.rs.html#10-197' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A simple easy to use wrapper around Ctrl-C.</p>
 
 <h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
@@ -56,32 +58,30 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Arc</span>;
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>running</span> <span class='op'>=</span> <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>AtomicBool</span>::<span class='ident'>new</span>(<span class='boolval'>true</span>));
+    <span class='kw'>let</span> <span class='ident'>running</span> <span class='op'>=</span> <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>AtomicBool</span>::<span class='ident'>new</span>(<span class='bool-val'>true</span>));
     <span class='kw'>let</span> <span class='ident'>r</span> <span class='op'>=</span> <span class='ident'>running</span>.<span class='ident'>clone</span>();
     <span class='ident'>ctrlc</span>::<span class='ident'>set_handler</span>(<span class='kw'>move</span> <span class='op'>||</span> {
-        <span class='ident'>r</span>.<span class='ident'>store</span>(<span class='boolval'>false</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>);
-    });
+        <span class='ident'>r</span>.<span class='ident'>store</span>(<span class='bool-val'>false</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>);
+    }).<span class='ident'>expect</span>(<span class='string'>&quot;Error setting Ctrl-C handler&quot;</span>);
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Waiting for Ctrl-C...&quot;</span>);
     <span class='kw'>while</span> <span class='ident'>running</span>.<span class='ident'>load</span>(<span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) {}
     <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;Got it! Exiting...&quot;</span>);
 }</pre>
-</div><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+</div><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Error.html'
+                                  title='ctrlc::Error'>Error</a></td>
+                           <td class='docblock-short'>
+                                
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class='fn' href='fn.set_handler.html'
                                   title='ctrlc::set_handler'>set_handler</a></td>
-                           <td class='docblock short'>
-                                <p>Sets up the signal handler for Ctrl-C using default polling rate of 100ms.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class='fn' href='fn.set_handler_with_polling_rate.html'
-                                  title='ctrlc::set_handler_with_polling_rate'>set_handler_with_polling_rate</a></td>
-                           <td class='docblock short'>
-                                <p>Sets up the signal handler for Ctrl-C using a custom polling rate.
-The polling rate is the amount of time the internal spinloop of CtrlC sleeps between
-iterations. Because condition variables are not safe to use inside a signal handler,
-CtrlC (from version 1.1.0) uses a spinloop and an atomic boolean instead.</p>
+                           <td class='docblock-short'>
+                                <p>Sets up the signal handler for Ctrl-C.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -106,6 +106,8 @@ CtrlC (from version 1.1.0) uses a spinloop and an atomic boolean instead.</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -137,11 +139,9 @@ CtrlC (from version 1.1.0) uses a spinloop and an atomic boolean instead.</p>
     <script>
         window.rootPath = "../";
         window.currentCrate = "ctrlc";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>
