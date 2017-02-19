@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["ctrlc"] = [];
 implementors["libc"] = [];
 
             if (window.register_implementors) {
