@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -252,215 +252,401 @@
 <span id="207">207</span>
 <span id="208">208</span>
 <span id="209">209</span>
-</pre><pre class='rust '>
-<span class='comment'>// Copyright (c) 2015 CtrlC developers</span>
-<span class='comment'>// Licensed under the Apache License, Version 2.0</span>
-<span class='comment'>// &lt;LICENSE-APACHE or</span>
-<span class='comment'>// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT</span>
-<span class='comment'>// license &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;,</span>
-<span class='comment'>// at your option. All files in the project carrying such</span>
-<span class='comment'>// notice may not be copied, modified, or distributed except</span>
-<span class='comment'>// according to those terms.</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright (c) 2015 CtrlC developers</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0</span>
+<span class="comment">// &lt;LICENSE-APACHE or</span>
+<span class="comment">// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT</span>
+<span class="comment">// license &lt;LICENSE-MIT or http://opensource.org/licenses/MIT&gt;,</span>
+<span class="comment">// at your option. All files in the project carrying such</span>
+<span class="comment">// notice may not be copied, modified, or distributed except</span>
+<span class="comment">// according to those terms.</span>
 
-<span class='doccomment'>//! A simple easy to use wrapper around Ctrl-C.</span>
-<span class='doccomment'>//! # Example</span>
-<span class='doccomment'>//! ```no_run</span>
-<span class='doccomment'>//! extern crate ctrlc;</span>
-<span class='doccomment'>//! use std::sync::atomic::{AtomicBool, Ordering};</span>
-<span class='doccomment'>//! use std::sync::Arc;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! fn main() {</span>
-<span class='doccomment'>//!     let running = Arc::new(AtomicBool::new(true));</span>
-<span class='doccomment'>//!     let r = running.clone();</span>
-<span class='doccomment'>//!     ctrlc::set_handler(move || {</span>
-<span class='doccomment'>//!         r.store(false, Ordering::SeqCst);</span>
-<span class='doccomment'>//!     }).expect(&quot;Error setting Ctrl-C handler&quot;);</span>
-<span class='doccomment'>//!     println!(&quot;Waiting for Ctrl-C...&quot;);</span>
-<span class='doccomment'>//!     while running.load(Ordering::SeqCst) {}</span>
-<span class='doccomment'>//!     println!(&quot;Got it! Exiting...&quot;);</span>
-<span class='doccomment'>//! }</span>
-<span class='doccomment'>//! ```</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::{<span class='ident'>AtomicBool</span>, <span class='ident'>Ordering</span>, <span class='ident'>ATOMIC_BOOL_INIT</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>thread</span>;
+<span class="doccomment">//! Cross platform handling of Ctrl-C signals.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [HandlerRoutine]:https://msdn.microsoft.com/en-us/library/windows/desktop/ms683242.aspx</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [set_handler()](fn.set_handler.html) allows setting a handler closure which is executed on</span>
+<span class="doccomment">//! `Ctrl+C`. On Unix, this corresponds to a `SIGINT` signal. On windows, `Ctrl+C` corresponds to</span>
+<span class="doccomment">//! [`CTRL_C_EVENT`][HandlerRoutine] or [`CTRL_BREAK_EVENT`][HandlerRoutine].</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Setting a handler will start a new dedicated signal handling thread where we</span>
+<span class="doccomment">//! execute the handler each time we receive a `Ctrl+C` signal. There can only be</span>
+<span class="doccomment">//! one handler, you would typically set one at the start of your program.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Example</span>
+<span class="doccomment">//! ```no_run</span>
+<span class="doccomment">//! extern crate ctrlc;</span>
+<span class="doccomment">//! use std::sync::atomic::{AtomicBool, Ordering};</span>
+<span class="doccomment">//! use std::sync::Arc;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! fn main() {</span>
+<span class="doccomment">//!     let running = Arc::new(AtomicBool::new(true));</span>
+<span class="doccomment">//!     let r = running.clone();</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     ctrlc::set_handler(move || {</span>
+<span class="doccomment">//!         r.store(false, Ordering::SeqCst);</span>
+<span class="doccomment">//!     }).expect(&quot;Error setting Ctrl-C handler&quot;);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!     println!(&quot;Waiting for Ctrl-C...&quot;);</span>
+<span class="doccomment">//!     while running.load(Ordering::SeqCst) {}</span>
+<span class="doccomment">//!     println!(&quot;Got it! Exiting...&quot;);</span>
+<span class="doccomment">//! }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Handling SIGTERM</span>
+<span class="doccomment">//! Handling of `SIGTERM` can be enabled with `termination` feature. If this is enabled,</span>
+<span class="doccomment">//! the handler specified by `set_handler()` will be executed for both `SIGINT` and `SIGTERM`.</span>
+<span class="doccomment">//!</span>
 
-<span class='kw'>static</span> <span class='ident'>INIT</span>: <span class='ident'>AtomicBool</span> <span class='op'>=</span> <span class='ident'>ATOMIC_BOOL_INIT</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="ident">AtomicBool</span>, <span class="ident">Ordering</span>, <span class="ident">ATOMIC_BOOL_INIT</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">thread</span>;
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Error</span> {
-    <span class='ident'>Init</span>(<span class='ident'>String</span>),
-    <span class='ident'>MultipleHandlers</span>(<span class='ident'>String</span>),
-    <span class='ident'>SetHandler</span>,
+<span class="kw">static</span> <span class="ident">INIT</span>: <span class="ident">AtomicBool</span> <span class="op">=</span> <span class="ident">ATOMIC_BOOL_INIT</span>;
+
+<span class="doccomment">/// Ctrl-C error.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
+    <span class="doccomment">/// Ctrl-C signal handler already registered.</span>
+    <span class="ident">MultipleHandlers</span>,
+    <span class="doccomment">/// Unexpected system error.</span>
+    <span class="ident">System</span>(<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Error</span>),
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>unix</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>platform</span> {
-    <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libc</span>;
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+        <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;Ctrl-C error: {}&quot;</span>, <span class="self">self</span>.<span class="ident">description</span>())
+    }
+}
 
-    <span class='kw'>use</span> ::<span class='ident'>Error</span>;
-    <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>libc</span>::<span class='ident'>c_int</span>;
-    <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>libc</span>::{<span class='ident'>signal</span>, <span class='ident'>sighandler_t</span>, <span class='ident'>SIGINT</span>, <span class='ident'>SIG_ERR</span>, <span class='ident'>EINTR</span>};
-
-    <span class='kw'>type</span> <span class='ident'>PipeReadEnd</span> <span class='op'>=</span> <span class='ident'>i32</span>;
-    <span class='kw'>type</span> <span class='ident'>PipeWriteEnd</span> <span class='op'>=</span> <span class='ident'>i32</span>;
-    <span class='kw'>pub</span> <span class='kw'>static</span> <span class='kw-2'>mut</span> <span class='ident'>PIPE_FDS</span>: (<span class='ident'>PipeReadEnd</span>, <span class='ident'>PipeWriteEnd</span>) <span class='op'>=</span> (<span class='op'>-</span><span class='number'>1</span>, <span class='op'>-</span><span class='number'>1</span>);
-
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>libc</span>::{<span class='ident'>c_void</span>, <span class='ident'>fcntl</span>, <span class='ident'>FD_CLOEXEC</span>, <span class='ident'>F_SETFD</span>, <span class='ident'>pipe</span>, <span class='ident'>read</span>, <span class='ident'>write</span>};
-
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;termination&quot;</span>)]</span>
-    <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>libc</span>::<span class='ident'>SIGTERM</span>;
-
-    <span class='kw'>extern</span> <span class='string'>&quot;C&quot;</span> {
-        <span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>any</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;macos&quot;</span>,
-                       <span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;ios&quot;</span>,
-                       <span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;freebsd&quot;</span>),
-                   <span class='ident'>link_name</span> <span class='op'>=</span> <span class='string'>&quot;__error&quot;</span>)]</span>
-        <span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;dragonfly&quot;</span>,
-                   <span class='ident'>link_name</span> <span class='op'>=</span> <span class='string'>&quot;__dfly_error&quot;</span>)]</span>
-        <span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>any</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;openbsd&quot;</span>,
-                       <span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;bitrig&quot;</span>,
-                       <span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;android&quot;</span>),
-                   <span class='ident'>link_name</span> <span class='op'>=</span> <span class='string'>&quot;__errno&quot;</span>)]</span>
-        <span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>target_os</span> <span class='op'>=</span> <span class='string'>&quot;linux&quot;</span>,
-                   <span class='ident'>link_name</span> <span class='op'>=</span> <span class='string'>&quot;__errno_location&quot;</span>)]</span>
-        <span class='kw'>fn</span> <span class='ident'>errno_location</span>() <span class='op'>-&gt;</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_int</span>;
+<span class="kw">impl</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">Error</span> {
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Error</span>::<span class="ident">MultipleHandlers</span> <span class="op">=&gt;</span> <span class="string">&quot;Ctrl-C signal handler already registered&quot;</span>,
+            <span class="ident">Error</span>::<span class="ident">System</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;Unexpected system error&quot;</span>,
+        }
     }
 
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>os_handler</span>(_: <span class='ident'>c_int</span>) {
-        <span class='comment'>// Assuming this always succeeds. Can&#39;t really handle errors in any meaningful way.</span>
-        <span class='ident'>write</span>(<span class='ident'>PIPE_FDS</span>.<span class='number'>1</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='number'>0u8</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _ <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>, <span class='number'>1</span>);
+    <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Error</span>::<span class="ident">System</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>),
+            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+        }
+    }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
+<span class="kw">mod</span> <span class="ident">platform</span> {
+    <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">nix</span>;
+
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Error</span>;
+    <span class="kw">use</span> <span class="self">self</span>::<span class="ident">nix</span>::<span class="ident">unistd</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">unix</span>::<span class="ident">io</span>::<span class="ident">RawFd</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
+
+    <span class="kw">static</span> <span class="kw-2">mut</span> <span class="ident">PIPE</span>: (<span class="ident">RawFd</span>, <span class="ident">RawFd</span>) <span class="op">=</span> (<span class="op">-</span><span class="number">1</span>, <span class="op">-</span><span class="number">1</span>);
+
+    <span class="kw">extern</span> <span class="kw">fn</span> <span class="ident">os_handler</span>(_: <span class="ident">nix</span>::<span class="ident">c_int</span>) {
+        <span class="comment">// Assuming this always succeeds. Can&#39;t really handle errors in any meaningful way.</span>
+        <span class="kw">unsafe</span> {
+            <span class="ident">unistd</span>::<span class="ident">write</span>(<span class="ident">PIPE</span>.<span class="number">1</span>, <span class="kw-2">&amp;</span>[<span class="number">0u8</span>]).<span class="ident">is_ok</span>();
+        }
     }
 
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;termination&quot;</span>)]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>set_os_handler</span>(<span class='ident'>handler</span>: <span class='kw'>unsafe</span> <span class='kw'>fn</span>(<span class='ident'>c_int</span>)) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>signal</span>(<span class='ident'>SIGINT</span>, ::<span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>transmute</span>::<span class='op'>&lt;</span>_, <span class='ident'>sighandler_t</span><span class='op'>&gt;</span>(<span class='ident'>handler</span>)) <span class='op'>==</span> <span class='ident'>SIG_ERR</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>SetHandler</span>);
+    <span class="doccomment">/// Register os signal handler.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Must be called before calling [`block_ctrl_c()`](fn.block_ctrl_c.html)</span>
+    <span class="doccomment">/// and should only be called once.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">/// Will return an error if a system error occurred.</span>
+    <span class="doccomment">///</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init_os_handler</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">nix</span>::<span class="ident">fcntl</span>;
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">nix</span>::<span class="ident">sys</span>::<span class="ident">signal</span>;
+
+        <span class="ident">PIPE</span> <span class="op">=</span> <span class="ident">unistd</span>::<span class="ident">pipe2</span>(<span class="ident">fcntl</span>::<span class="ident">O_CLOEXEC</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">Error</span>::<span class="ident">System</span>(<span class="ident">e</span>.<span class="ident">into</span>()))<span class="question-mark">?</span>;
+
+        <span class="kw">let</span> <span class="ident">close_pipe</span> <span class="op">=</span> <span class="op">|</span><span class="ident">e</span>: <span class="ident">nix</span>::<span class="ident">Error</span><span class="op">|</span> <span class="op">-&gt;</span> <span class="ident">Error</span> {
+            <span class="ident">unistd</span>::<span class="ident">close</span>(<span class="ident">PIPE</span>.<span class="number">1</span>).<span class="ident">is_ok</span>();
+            <span class="ident">unistd</span>::<span class="ident">close</span>(<span class="ident">PIPE</span>.<span class="number">0</span>).<span class="ident">is_ok</span>();
+            <span class="ident">Error</span>::<span class="ident">System</span>(<span class="ident">e</span>.<span class="ident">into</span>())
+        };
+
+        <span class="comment">// Make sure we never block on write in the os handler.</span>
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span> <span class="ident">fcntl</span>::<span class="ident">fcntl</span>(<span class="ident">PIPE</span>.<span class="number">1</span>, <span class="ident">fcntl</span>::<span class="ident">FcntlArg</span>::<span class="ident">F_SETFL</span>(<span class="ident">fcntl</span>::<span class="ident">O_NONBLOCK</span>)) {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">close_pipe</span>(<span class="ident">e</span>));
         }
-        <span class='kw'>if</span> <span class='ident'>signal</span>(<span class='ident'>SIGTERM</span>, ::<span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>transmute</span>::<span class='op'>&lt;</span>_, <span class='ident'>sighandler_t</span><span class='op'>&gt;</span>(<span class='ident'>handler</span>)) <span class='op'>==</span> <span class='ident'>SIG_ERR</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>SetHandler</span>);
+
+        <span class="kw">let</span> <span class="ident">handler</span> <span class="op">=</span> <span class="ident">signal</span>::<span class="ident">SigHandler</span>::<span class="ident">Handler</span>(<span class="ident">os_handler</span>);
+        <span class="kw">let</span> <span class="ident">new_action</span> <span class="op">=</span> <span class="ident">signal</span>::<span class="ident">SigAction</span>::<span class="ident">new</span>(<span class="ident">handler</span>,
+            <span class="ident">signal</span>::<span class="ident">SA_RESTART</span>,
+            <span class="ident">signal</span>::<span class="ident">SigSet</span>::<span class="ident">empty</span>()
+        );
+
+        <span class="kw">let</span> <span class="ident">_old</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">signal</span>::<span class="ident">sigaction</span>(<span class="ident">signal</span>::<span class="ident">Signal</span>::<span class="ident">SIGINT</span>, <span class="kw-2">&amp;</span><span class="ident">new_action</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">old</span>) <span class="op">=&gt;</span> <span class="ident">old</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">close_pipe</span>(<span class="ident">e</span>)),
+        };
+
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;termination&quot;</span>)]</span>
+        <span class="kw">match</span> <span class="ident">signal</span>::<span class="ident">sigaction</span>(<span class="ident">signal</span>::<span class="ident">Signal</span>::<span class="ident">SIGTERM</span>, <span class="kw-2">&amp;</span><span class="ident">new_action</span>) {
+            <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> {},
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> {
+                <span class="ident">signal</span>::<span class="ident">sigaction</span>(<span class="ident">signal</span>::<span class="ident">Signal</span>::<span class="ident">SIGINT</span>, <span class="kw-2">&amp;</span><span class="ident">_old</span>).<span class="ident">unwrap</span>();
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">close_pipe</span>(<span class="ident">e</span>));
+            },
         }
-        <span class='prelude-val'>Ok</span>(())
+
+        <span class="comment">// TODO: Maybe throw an error if old action is not SigDfl.</span>
+
+        <span class="prelude-val">Ok</span>(())
     }
 
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;termination&quot;</span>))]</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>set_os_handler</span>(<span class='ident'>handler</span>: <span class='kw'>unsafe</span> <span class='kw'>fn</span>(<span class='ident'>c_int</span>)) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>signal</span>(<span class='ident'>SIGINT</span>, ::<span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>transmute</span>::<span class='op'>&lt;</span>_, <span class='ident'>sighandler_t</span><span class='op'>&gt;</span>(<span class='ident'>handler</span>)) <span class='op'>==</span> <span class='ident'>SIG_ERR</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>SetHandler</span>);
-        }
-        <span class='prelude-val'>Ok</span>(())
-    }
+    <span class="doccomment">/// Blocks until a Ctrl-C signal is received.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Must be called after calling [`init_os_handler()`](fn.init_os_handler.html).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">/// Will return an error if a system error occurred.</span>
+    <span class="doccomment">///</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">block_ctrl_c</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0u8</span>];
 
-    <span class='doccomment'>/// Register os signal handler, must be called before calling `block_ctrl_c()`.</span>
-    <span class='doccomment'>/// Should only be called once.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>init_os_handler</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>fds</span> <span class='op'>=</span> [<span class='number'>0i32</span>, <span class='number'>0</span>];
-        <span class='kw'>let</span> <span class='ident'>pipe_fds</span> <span class='op'>=</span> <span class='ident'>fds</span>.<span class='ident'>as_mut_ptr</span>();
-        <span class='kw'>if</span> <span class='ident'>pipe</span>(<span class='ident'>pipe_fds</span>) <span class='op'>==</span> <span class='op'>-</span><span class='number'>1</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>Init</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;pipe failed with error {}&quot;</span>, <span class='kw-2'>*</span><span class='ident'>errno_location</span>())));
-        }
-        <span class='ident'>PIPE_FDS</span> <span class='op'>=</span> (<span class='kw-2'>*</span><span class='ident'>pipe_fds</span>.<span class='ident'>offset</span>(<span class='number'>0</span>), <span class='kw-2'>*</span><span class='ident'>pipe_fds</span>.<span class='ident'>offset</span>(<span class='number'>1</span>));
-        <span class='kw'>if</span> <span class='ident'>fcntl</span>(<span class='ident'>PIPE_FDS</span>.<span class='number'>0</span>, <span class='ident'>F_SETFD</span>, <span class='ident'>FD_CLOEXEC</span>) <span class='op'>==</span> <span class='op'>-</span><span class='number'>1</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>Init</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;fcntl failed with error {}&quot;</span>, <span class='kw-2'>*</span><span class='ident'>errno_location</span>())));
-        }
-        <span class='kw'>if</span> <span class='ident'>fcntl</span>(<span class='ident'>PIPE_FDS</span>.<span class='number'>1</span>, <span class='ident'>F_SETFD</span>, <span class='ident'>FD_CLOEXEC</span>) <span class='op'>==</span> <span class='op'>-</span><span class='number'>1</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>Init</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;fcntl failed with error {}&quot;</span>, <span class='kw-2'>*</span><span class='ident'>errno_location</span>())));
-        }
-        <span class='ident'>set_os_handler</span>(<span class='ident'>os_handler</span>)
-    }
-
-    <span class='doccomment'>/// Blocks until a Ctrl-C signal is received.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>block_ctrl_c</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='number'>0u8</span>;
-        <span class='kw'>loop</span> {
-            <span class='kw'>if</span> <span class='ident'>read</span>(<span class='ident'>PIPE_FDS</span>.<span class='number'>0</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>buf</span> <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> _ <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw-2'>mut</span> <span class='ident'>c_void</span>, <span class='number'>1</span>) <span class='op'>==</span> <span class='op'>-</span><span class='number'>1</span> {
-                <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='kw-2'>*</span><span class='ident'>errno_location</span>(), <span class='ident'>EINTR</span>);
-            } <span class='kw'>else</span> {
-                <span class='kw'>break</span>;
+        <span class="comment">// TODO: Can we safely convert the pipe fd into a std::io::Read</span>
+        <span class="comment">// with std::os::unix::io::FromRawFd, this would handle EINTR</span>
+        <span class="comment">// and everything for us.</span>
+        <span class="kw">loop</span> {
+            <span class="kw">match</span> <span class="ident">unistd</span>::<span class="ident">read</span>(<span class="ident">PIPE</span>.<span class="number">0</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>[..]) {
+                <span class="prelude-val">Ok</span>(<span class="number">1</span>) <span class="op">=&gt;</span> <span class="kw">break</span>,
+                <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">System</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">UnexpectedEof</span>.<span class="ident">into</span>()).<span class="ident">into</span>()),
+                <span class="prelude-val">Err</span>(<span class="ident">nix</span>::<span class="ident">Error</span>::<span class="ident">Sys</span>(<span class="ident">nix</span>::<span class="ident">Errno</span>::<span class="ident">EINTR</span>)) <span class="op">=&gt;</span> {},
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">System</span>(<span class="ident">e</span>.<span class="ident">into</span>())),
             }
         }
+
+        <span class="prelude-val">Ok</span>(())
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>windows</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>platform</span> {
-    <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>winapi</span>;
-    <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>kernel32</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
+<span class="kw">mod</span> <span class="ident">platform</span> {
+    <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">winapi</span>;
+    <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">kernel32</span>;
 
-    <span class='kw'>use</span> ::<span class='ident'>Error</span>;
-    <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>kernel32</span>::{<span class='ident'>SetConsoleCtrlHandler</span>, <span class='ident'>CreateSemaphoreA</span>, <span class='ident'>ReleaseSemaphore</span>,
-                         <span class='ident'>WaitForSingleObject</span>};
-    <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>winapi</span>::{<span class='ident'>HANDLE</span>, <span class='ident'>BOOL</span>, <span class='ident'>DWORD</span>, <span class='ident'>TRUE</span>, <span class='ident'>FALSE</span>, <span class='ident'>INFINITE</span>, <span class='ident'>WAIT_OBJECT_0</span>, <span class='ident'>c_long</span>};
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Error</span>;
+    <span class="kw">use</span> <span class="self">self</span>::<span class="ident">winapi</span>::{<span class="ident">HANDLE</span>, <span class="ident">BOOL</span>, <span class="ident">DWORD</span>, <span class="ident">TRUE</span>, <span class="ident">FALSE</span>, <span class="ident">c_long</span>};
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 
-    <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ptr</span>;
+    <span class="kw">const</span> <span class="ident">MAX_SEM_COUNT</span>: <span class="ident">c_long</span> <span class="op">=</span> <span class="number">255</span>;
+    <span class="kw">static</span> <span class="kw-2">mut</span> <span class="ident">SEMAPHORE</span>: <span class="ident">HANDLE</span> <span class="op">=</span> <span class="number">0</span> <span class="kw">as</span> <span class="ident">HANDLE</span>;
 
-    <span class='kw'>const</span> <span class='ident'>MAX_SEM_COUNT</span>: <span class='ident'>c_long</span> <span class='op'>=</span> <span class='number'>255</span>;
-    <span class='kw'>static</span> <span class='kw-2'>mut</span> <span class='ident'>SEMAPHORE</span>: <span class='ident'>HANDLE</span> <span class='op'>=</span> <span class='number'>0</span> <span class='kw'>as</span> <span class='ident'>HANDLE</span>;
-
-    <span class='kw'>unsafe</span> <span class='kw'>extern</span> <span class='string'>&quot;system&quot;</span> <span class='kw'>fn</span> <span class='ident'>os_handler</span>(_: <span class='ident'>DWORD</span>) <span class='op'>-&gt;</span> <span class='ident'>BOOL</span> {
-        <span class='comment'>// ReleaseSemaphore() should only fail when the semaphore</span>
-        <span class='comment'>// counter has reached its maximum value or if the semaphore</span>
-        <span class='comment'>// is invalid, we can therefore safely ignore return value.</span>
-        <span class='ident'>ReleaseSemaphore</span>(<span class='ident'>SEMAPHORE</span>, <span class='number'>1</span>, <span class='ident'>ptr</span>::<span class='ident'>null_mut</span>());
-        <span class='ident'>TRUE</span>
+    <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;system&quot;</span> <span class="kw">fn</span> <span class="ident">os_handler</span>(_: <span class="ident">DWORD</span>) <span class="op">-&gt;</span> <span class="ident">BOOL</span> {
+        <span class="comment">// Assuming this always succeeds. Can&#39;t really handle errors in any meaningful way.</span>
+        <span class="ident">kernel32</span>::<span class="ident">ReleaseSemaphore</span>(<span class="ident">SEMAPHORE</span>, <span class="number">1</span>, <span class="ident">ptr</span>::<span class="ident">null_mut</span>());
+        <span class="ident">TRUE</span>
     }
 
-    <span class='doccomment'>/// Register os signal handler, must be called before calling block_ctrl_c().</span>
-    <span class='doccomment'>/// Should only be called once.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>init_os_handler</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='ident'>SEMAPHORE</span> <span class='op'>=</span> <span class='ident'>CreateSemaphoreA</span>(<span class='ident'>ptr</span>::<span class='ident'>null_mut</span>(), <span class='number'>0</span>, <span class='ident'>MAX_SEM_COUNT</span>, <span class='ident'>ptr</span>::<span class='ident'>null</span>());
-        <span class='kw'>if</span> <span class='ident'>SEMAPHORE</span>.<span class='ident'>is_null</span>() {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>Init</span>(<span class='string'>&quot;CreateSemaphoreA failed&quot;</span>.<span class='ident'>into</span>()));
+    <span class="doccomment">/// Register os signal handler.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Must be called before calling [`block_ctrl_c()`](fn.block_ctrl_c.html)</span>
+    <span class="doccomment">/// and should only be called once.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">/// Will return an error if a system error occurred.</span>
+    <span class="doccomment">///</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init_os_handler</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="ident">SEMAPHORE</span> <span class="op">=</span> <span class="ident">kernel32</span>::<span class="ident">CreateSemaphoreA</span>(<span class="ident">ptr</span>::<span class="ident">null_mut</span>(), <span class="number">0</span>, <span class="ident">MAX_SEM_COUNT</span>, <span class="ident">ptr</span>::<span class="ident">null</span>());
+        <span class="kw">if</span> <span class="ident">SEMAPHORE</span>.<span class="ident">is_null</span>() {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">System</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">last_os_error</span>()));
         }
-        <span class='kw'>if</span> <span class='ident'>SetConsoleCtrlHandler</span>(<span class='prelude-val'>Some</span>(<span class='ident'>os_handler</span>), <span class='ident'>TRUE</span>) <span class='op'>==</span> <span class='ident'>FALSE</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>SetHandler</span>);
+
+        <span class="kw">if</span> <span class="ident">kernel32</span>::<span class="ident">SetConsoleCtrlHandler</span>(<span class="prelude-val">Some</span>(<span class="ident">os_handler</span>), <span class="ident">TRUE</span>) <span class="op">==</span> <span class="ident">FALSE</span> {
+            <span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">last_os_error</span>();
+            <span class="ident">kernel32</span>::<span class="ident">CloseHandle</span>(<span class="ident">SEMAPHORE</span>);
+            <span class="ident">SEMAPHORE</span> <span class="op">=</span> <span class="number">0</span> <span class="kw">as</span> <span class="ident">HANDLE</span>;
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">System</span>(<span class="ident">e</span>));
         }
-        <span class='prelude-val'>Ok</span>(())
+
+        <span class="prelude-val">Ok</span>(())
     }
 
-    <span class='doccomment'>/// Blocks until a Ctrl-C signal is received.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>block_ctrl_c</span>() {
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>WaitForSingleObject</span>(<span class='ident'>SEMAPHORE</span>, <span class='ident'>INFINITE</span>), <span class='ident'>WAIT_OBJECT_0</span>);
+    <span class="doccomment">/// Blocks until a Ctrl-C signal is received.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Must be called after calling [`init_os_handler()`](fn.init_os_handler.html).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">/// Will return an error if a system error occurred.</span>
+    <span class="doccomment">///</span>
+    <span class="attribute">#[<span class="ident">inline</span>]</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">block_ctrl_c</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">winapi</span>::{<span class="ident">INFINITE</span>, <span class="ident">WAIT_OBJECT_0</span>, <span class="ident">WAIT_FAILED</span>};
+
+        <span class="kw">match</span> <span class="ident">kernel32</span>::<span class="ident">WaitForSingleObject</span>(<span class="ident">SEMAPHORE</span>, <span class="ident">INFINITE</span>) {
+            <span class="ident">WAIT_OBJECT_0</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="ident">WAIT_FAILED</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">System</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">last_os_error</span>())),
+            <span class="ident">ret</span> <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">System</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(
+                <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Other</span>,
+                <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;WaitForSingleObject(), unexpected return value \&quot;{:x}\&quot;&quot;</span>, <span class="ident">ret</span>),
+            ))),
+        }
     }
 }
 
-<span class='doccomment'>/// Sets up the signal handler for Ctrl-C.</span>
-<span class='doccomment'>/// # Example</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// ctrlc::set_handler(|| println!(&quot;Hello world!&quot;)).expect(&quot;Error setting Ctrl-C handler&quot;);</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>set_handler</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='ident'>user_handler</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>Fn</span>() <span class='op'>-&gt;</span> () <span class='op'>+</span> <span class='lifetime'>&#39;static</span> <span class='op'>+</span> <span class='ident'>Send</span>
+<span class="doccomment">/// Register signal handler for Ctrl-C.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Starts a new dedicated signal handling thread. Should only be called once,</span>
+<span class="doccomment">/// typically at the start of your program.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Example</span>
+<span class="doccomment">/// ```no_run</span>
+<span class="doccomment">/// ctrlc::set_handler(|| println!(&quot;Hello world!&quot;)).expect(&quot;Error setting Ctrl-C handler&quot;);</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Warning</span>
+<span class="doccomment">/// On Unix, any existing `SIGINT`, `SIGTERM`(if termination feature is enabled) or `SA_SIGINFO`</span>
+<span class="doccomment">/// posix signal handlers will be overwritten. On Windows, multiple handler routines are allowed,</span>
+<span class="doccomment">/// but they are called on a last-registered, first-called basis until the signal is handled.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// On Unix, signal dispositions and signal handlers are inherited by child processes created via</span>
+<span class="doccomment">/// `fork(2)` on, but not by child processes created via `execve(2)`.</span>
+<span class="doccomment">/// Signal handlers are not inherited on Windows.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Errors</span>
+<span class="doccomment">/// Will return an error if another `ctrlc::set_handler()` handler exists or if a</span>
+<span class="doccomment">/// system error occurred while setting the handler.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Panics</span>
+<span class="doccomment">/// Any panic in the handler will not be caught and will cause the signal handler thread to stop.</span>
+<span class="doccomment">///</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_handler</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">user_handler</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span>
+    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Fn</span>() <span class="op">-&gt;</span> () <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Send</span>
 {
-    <span class='kw'>if</span> <span class='ident'>INIT</span>.<span class='ident'>swap</span>(<span class='bool-val'>true</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='op'>!=</span> <span class='bool-val'>false</span> {
-        <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>MultipleHandlers</span>(<span class='string'>&quot;Ctrl-C signal handler already registered&quot;</span>.<span class='ident'>into</span>()));
+    <span class="kw">if</span> <span class="ident">INIT</span>.<span class="ident">compare_and_swap</span>(<span class="bool-val">false</span>, <span class="bool-val">true</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>) {
+        <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">MultipleHandlers</span>);
     }
 
-    <span class='kw'>unsafe</span> {
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>platform</span>::<span class='ident'>init_os_handler</span>());
+    <span class="kw">unsafe</span> {
+        <span class="kw">match</span> <span class="ident">platform</span>::<span class="ident">init_os_handler</span>() {
+            <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> {},
+            <span class="ident">err</span> <span class="op">=&gt;</span> {
+                <span class="ident">INIT</span>.<span class="ident">store</span>(<span class="bool-val">false</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
+                <span class="kw">return</span> <span class="ident">err</span>;
+            },
+        }
     }
 
-    <span class='ident'>thread</span>::<span class='ident'>spawn</span>(<span class='kw'>move</span> <span class='op'>||</span> {
-        <span class='kw'>loop</span> {
-            <span class='kw'>unsafe</span> {
-                <span class='ident'>platform</span>::<span class='ident'>block_ctrl_c</span>();
+    <span class="ident">thread</span>::<span class="ident">spawn</span>(<span class="kw">move</span> <span class="op">||</span> {
+        <span class="kw">loop</span> {
+            <span class="kw">unsafe</span> {
+                <span class="ident">platform</span>::<span class="ident">block_ctrl_c</span>().<span class="ident">expect</span>(<span class="string">&quot;Critical system error while waiting for Ctrl-C&quot;</span>);
             }
-            <span class='ident'>user_handler</span>();
+            <span class="ident">user_handler</span>();
         }
     });
 
-    <span class='prelude-val'>Ok</span>(())
-}
-
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>test_multiple_handlers</span>() {
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>set_handler</span>(<span class='op'>||</span> {}).<span class='ident'>is_ok</span>());
-    <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>set_handler</span>(<span class='op'>||</span> {}).<span class='ident'>is_err</span>());
+    <span class="prelude-val">Ok</span>(())
 }
 </pre>
 </section>
@@ -520,7 +706,6 @@
         window.rootPath = "../../";
         window.currentCrate = "ctrlc";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

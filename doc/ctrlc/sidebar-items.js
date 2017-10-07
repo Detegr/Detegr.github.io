@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Error",""]],"fn":[["set_handler","Sets up the signal handler for Ctrl-C. # Example ``` ctrlc::set_handler(|| println!(\"Hello world!\")).expect(\"Error setting Ctrl-C handler\"); ```"]]});
+initSidebarItems({"enum":[["Error","Ctrl-C error."]],"fn":[["set_handler","Register signal handler for Ctrl-C."]]});
