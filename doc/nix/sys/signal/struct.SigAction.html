@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Struct SigAction</p><div class="block items"><ul><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../../index.html'>nix</a>::<wbr><a href='../index.html'>sys</a>::<wbr><a href='index.html'>signal</a></p><script>window.sidebarCurrent = {name: 'SigAction', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct SigAction</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.flags">flags</a><a href="#method.mask">mask</a><a href="#method.handler">handler</a></div></div><p class='location'><a href='../../index.html'>nix</a>::<wbr><a href='../index.html'>sys</a>::<wbr><a href='index.html'>signal</a></p><script>window.sidebarCurrent = {name: 'SigAction', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -48,12 +48,19 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../../src/nix/sys/signal.rs.html#326-328' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct SigAction { /* fields omitted */ }</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../../../nix/sys/signal/struct.SigAction.html" title="struct nix::sys::signal::SigAction">SigAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/nix/sys/signal.rs.html#330-349' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(handler: <a class="enum" href="../../../nix/sys/signal/enum.SigHandler.html" title="enum nix::sys::signal::SigHandler">SigHandler</a>, flags: <a class="struct" href="../../../nix/sys/signal/struct.SaFlags.html" title="struct nix::sys::signal::SaFlags">SaFlags</a>, mask: <a class="struct" href="../../../nix/sys/signal/struct.SigSet.html" title="struct nix::sys::signal::SigSet">SigSet</a>) -&gt; <a class="struct" href="../../../nix/sys/signal/struct.SigAction.html" title="struct nix::sys::signal::SigAction">SigAction</a></code></span></h4>
+               </span><a class='srclink' href='../../../src/nix/sys/signal.rs.html#356-358' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct SigAction { /* fields omitted */ }</pre>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../../../nix/sys/signal/struct.SigAction.html" title="struct nix::sys::signal::SigAction">SigAction</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/nix/sys/signal.rs.html#360-397' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(handler: <a class="enum" href="../../../nix/sys/signal/enum.SigHandler.html" title="enum nix::sys::signal::SigHandler">SigHandler</a>, flags: <a class="struct" href="../../../nix/sys/signal/struct.SaFlags.html" title="struct nix::sys::signal::SaFlags">SaFlags</a>, mask: <a class="struct" href="../../../nix/sys/signal/struct.SigSet.html" title="struct nix::sys::signal::SigSet">SigSet</a>) -&gt; <a class="struct" href="../../../nix/sys/signal/struct.SigAction.html" title="struct nix::sys::signal::SigAction">SigAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/nix/sys/signal.rs.html#363-378' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This function will set or unset the flag <code>SA_SIGINFO</code> depending on the
 type of the <code>handler</code> argument.</p>
-</div></div></section>
+</div><h4 id='method.flags' class="method"><span id='flags.v' class='invisible'><code>pub fn <a href='#method.flags' class='fnname'>flags</a>(&amp;self) -&gt; <a class="struct" href="../../../nix/sys/signal/struct.SaFlags.html" title="struct nix::sys::signal::SaFlags">SaFlags</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/nix/sys/signal.rs.html#380-382' title='goto source code'>[src]</a></span></h4>
+<h4 id='method.mask' class="method"><span id='mask.v' class='invisible'><code>pub fn <a href='#method.mask' class='fnname'>mask</a>(&amp;self) -&gt; <a class="struct" href="../../../nix/sys/signal/struct.SigSet.html" title="struct nix::sys::signal::SigSet">SigSet</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/nix/sys/signal.rs.html#384-386' title='goto source code'>[src]</a></span></h4>
+<h4 id='method.handler' class="method"><span id='handler.v' class='invisible'><code>pub fn <a href='#method.handler' class='fnname'>handler</a>(&amp;self) -&gt; <a class="enum" href="../../../nix/sys/signal/enum.SigHandler.html" title="enum nix::sys::signal::SigHandler">SigHandler</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/nix/sys/signal.rs.html#388-396' title='goto source code'>[src]</a></span></h4>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -70,13 +77,15 @@ type of the <code>handler</code> argument.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

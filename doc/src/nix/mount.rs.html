@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/antti/.cargo/registry/src/github.com-1ecc6299db9ec823/nix-0.8.1/src/mount.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/antti/.cargo/registry/src/github.com-1ecc6299db9ec823/nix-0.9.0/src/mount.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mount.rs.html -- source</title>
@@ -140,38 +140,38 @@
 <span class="kw">use</span> {<span class="ident">Errno</span>, <span class="prelude-ty">Result</span>, <span class="ident">NixPath</span>};
 
 <span class="macro">bitflags</span><span class="macro">!</span>(
-    <span class="kw">pub</span> <span class="ident">flags</span> <span class="ident">MsFlags</span>: <span class="ident">c_ulong</span> {
-        <span class="kw">const</span> <span class="ident">MS_RDONLY</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_RDONLY</span>,      <span class="comment">// Mount read-only</span>
-        <span class="kw">const</span> <span class="ident">MS_NOSUID</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NOSUID</span>,      <span class="comment">// Ignore suid and sgid bits</span>
-        <span class="kw">const</span> <span class="ident">MS_NODEV</span>       <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NODEV</span>,       <span class="comment">// Disallow access to device special files</span>
-        <span class="kw">const</span> <span class="ident">MS_NOEXEC</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NOEXEC</span>,      <span class="comment">// Disallow program execution</span>
-        <span class="kw">const</span> <span class="ident">MS_SYNCHRONOUS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_SYNCHRONOUS</span>, <span class="comment">// Writes are synced at once</span>
-        <span class="kw">const</span> <span class="ident">MS_REMOUNT</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_REMOUNT</span>,     <span class="comment">// Alter flags of a mounted FS</span>
-        <span class="kw">const</span> <span class="ident">MS_MANDLOCK</span>    <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_MANDLOCK</span>,    <span class="comment">// Allow mandatory locks on a FS</span>
-        <span class="kw">const</span> <span class="ident">MS_DIRSYNC</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_DIRSYNC</span>,     <span class="comment">// Directory modifications are synchronous</span>
-        <span class="kw">const</span> <span class="ident">MS_NOATIME</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NOATIME</span>,     <span class="comment">// Do not update access times</span>
-        <span class="kw">const</span> <span class="ident">MS_NODIRATIME</span>  <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NODIRATIME</span>,  <span class="comment">// Do not update directory access times</span>
-        <span class="kw">const</span> <span class="ident">MS_BIND</span>        <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_BIND</span>,        <span class="comment">// Linux 2.4.0 - Bind directory at different place</span>
-        <span class="kw">const</span> <span class="ident">MS_MOVE</span>        <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_MOVE</span>,
-        <span class="kw">const</span> <span class="ident">MS_REC</span>         <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_REC</span>,
-        <span class="kw">const</span> <span class="ident">MS_VERBOSE</span>     <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">15</span>,              <span class="comment">// Deprecated</span>
-        <span class="kw">const</span> <span class="ident">MS_SILENT</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_SILENT</span>,
-        <span class="kw">const</span> <span class="ident">MS_POSIXACL</span>    <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_POSIXACL</span>,
-        <span class="kw">const</span> <span class="ident">MS_UNBINDABLE</span>  <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_UNBINDABLE</span>,
-        <span class="kw">const</span> <span class="ident">MS_PRIVATE</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_PRIVATE</span>,
-        <span class="kw">const</span> <span class="ident">MS_SLAVE</span>       <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_SLAVE</span>,
-        <span class="kw">const</span> <span class="ident">MS_SHARED</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_SHARED</span>,
-        <span class="kw">const</span> <span class="ident">MS_RELATIME</span>    <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_RELATIME</span>,
-        <span class="kw">const</span> <span class="ident">MS_KERNMOUNT</span>   <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_KERNMOUNT</span>,
-        <span class="kw">const</span> <span class="ident">MS_I_VERSION</span>   <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_I_VERSION</span>,
-        <span class="kw">const</span> <span class="ident">MS_STRICTATIME</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_STRICTATIME</span>,
-        <span class="kw">const</span> <span class="ident">MS_NOSEC</span>       <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">28</span>,
-        <span class="kw">const</span> <span class="ident">MS_BORN</span>        <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">29</span>,
-        <span class="kw">const</span> <span class="ident">MS_ACTIVE</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_ACTIVE</span>,
-        <span class="kw">const</span> <span class="ident">MS_NOUSER</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NOUSER</span>,
-        <span class="kw">const</span> <span class="ident">MS_RMT_MASK</span>    <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_RMT_MASK</span>,
-        <span class="kw">const</span> <span class="ident">MS_MGC_VAL</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_MGC_VAL</span>,
-        <span class="kw">const</span> <span class="ident">MS_MGC_MSK</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_MGC_MSK</span>,
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MsFlags</span>: <span class="ident">c_ulong</span> {
+        <span class="kw">const</span> <span class="ident">MS_RDONLY</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_RDONLY</span>;      <span class="comment">// Mount read-only</span>
+        <span class="kw">const</span> <span class="ident">MS_NOSUID</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NOSUID</span>;      <span class="comment">// Ignore suid and sgid bits</span>
+        <span class="kw">const</span> <span class="ident">MS_NODEV</span>       <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NODEV</span>;       <span class="comment">// Disallow access to device special files</span>
+        <span class="kw">const</span> <span class="ident">MS_NOEXEC</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NOEXEC</span>;      <span class="comment">// Disallow program execution</span>
+        <span class="kw">const</span> <span class="ident">MS_SYNCHRONOUS</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_SYNCHRONOUS</span>; <span class="comment">// Writes are synced at once</span>
+        <span class="kw">const</span> <span class="ident">MS_REMOUNT</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_REMOUNT</span>;     <span class="comment">// Alter flags of a mounted FS</span>
+        <span class="kw">const</span> <span class="ident">MS_MANDLOCK</span>    <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_MANDLOCK</span>;    <span class="comment">// Allow mandatory locks on a FS</span>
+        <span class="kw">const</span> <span class="ident">MS_DIRSYNC</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_DIRSYNC</span>;     <span class="comment">// Directory modifications are synchronous</span>
+        <span class="kw">const</span> <span class="ident">MS_NOATIME</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NOATIME</span>;     <span class="comment">// Do not update access times</span>
+        <span class="kw">const</span> <span class="ident">MS_NODIRATIME</span>  <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NODIRATIME</span>;  <span class="comment">// Do not update directory access times</span>
+        <span class="kw">const</span> <span class="ident">MS_BIND</span>        <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_BIND</span>;        <span class="comment">// Linux 2.4.0 - Bind directory at different place</span>
+        <span class="kw">const</span> <span class="ident">MS_MOVE</span>        <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_MOVE</span>;
+        <span class="kw">const</span> <span class="ident">MS_REC</span>         <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_REC</span>;
+        <span class="kw">const</span> <span class="ident">MS_VERBOSE</span>     <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">15</span>;              <span class="comment">// Deprecated</span>
+        <span class="kw">const</span> <span class="ident">MS_SILENT</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_SILENT</span>;
+        <span class="kw">const</span> <span class="ident">MS_POSIXACL</span>    <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_POSIXACL</span>;
+        <span class="kw">const</span> <span class="ident">MS_UNBINDABLE</span>  <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_UNBINDABLE</span>;
+        <span class="kw">const</span> <span class="ident">MS_PRIVATE</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_PRIVATE</span>;
+        <span class="kw">const</span> <span class="ident">MS_SLAVE</span>       <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_SLAVE</span>;
+        <span class="kw">const</span> <span class="ident">MS_SHARED</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_SHARED</span>;
+        <span class="kw">const</span> <span class="ident">MS_RELATIME</span>    <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_RELATIME</span>;
+        <span class="kw">const</span> <span class="ident">MS_KERNMOUNT</span>   <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_KERNMOUNT</span>;
+        <span class="kw">const</span> <span class="ident">MS_I_VERSION</span>   <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_I_VERSION</span>;
+        <span class="kw">const</span> <span class="ident">MS_STRICTATIME</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_STRICTATIME</span>;
+        <span class="kw">const</span> <span class="ident">MS_NOSEC</span>       <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">28</span>;
+        <span class="kw">const</span> <span class="ident">MS_BORN</span>        <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">29</span>;
+        <span class="kw">const</span> <span class="ident">MS_ACTIVE</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_ACTIVE</span>;
+        <span class="kw">const</span> <span class="ident">MS_NOUSER</span>      <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_NOUSER</span>;
+        <span class="kw">const</span> <span class="ident">MS_RMT_MASK</span>    <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_RMT_MASK</span>;
+        <span class="kw">const</span> <span class="ident">MS_MGC_VAL</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_MGC_VAL</span>;
+        <span class="kw">const</span> <span class="ident">MS_MGC_MSK</span>     <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">MS_MGC_MSK</span>;
     }
 );
 
@@ -244,13 +244,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>

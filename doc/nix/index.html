@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/nix/lib.rs.html#1-259' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/nix/lib.rs.html#1-257' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Rust friendly bindings to the various *nix system functions.</p>
 
 <p>Modules are structured according to the C header file that they would be
@@ -112,6 +112,13 @@ defined in.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="mod" href="pty/index.html"
+                                  title='mod nix::pty'>pty</a></td>
+                           <td class='docblock-short'>
+                                <p>Create master and slave virtual pseudo-terminals (PTYs)</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="mod" href="sched/index.html"
                                   title='mod nix::sched'>sched</a></td>
                            <td class='docblock-short'>
@@ -141,52 +148,10 @@ defined in.</p>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="macro" href="macro.convert_ioctl_res.html"
-                                  title='macro nix::convert_ioctl_res'>convert_ioctl_res</a></td>
-                           <td class='docblock-short'>
-                                <p>Convert raw ioctl return value to a Nix result</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="macro" href="macro.io.html"
-                                  title='macro nix::io'>io</a></td>
-                           <td class='docblock-short'>
-                                <p>Encode an ioctl command that has no associated data.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="macro" href="macro.ioc.html"
-                                  title='macro nix::ioc'>ioc</a></td>
-                           <td class='docblock-short'>
-                                <p>Encode an ioctl command.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="macro" href="macro.ioctl.html"
                                   title='macro nix::ioctl'>ioctl</a></td>
                            <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="macro" href="macro.ior.html"
-                                  title='macro nix::ior'>ior</a></td>
-                           <td class='docblock-short'>
-                                <p>Encode an ioctl command that reads.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="macro" href="macro.iorw.html"
-                                  title='macro nix::iorw'>iorw</a></td>
-                           <td class='docblock-short'>
-                                <p>Encode an ioctl command that both reads and writes.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="macro" href="macro.iow.html"
-                                  title='macro nix::iow'>iow</a></td>
-                           <td class='docblock-short'>
-                                <p>Encode an ioctl command that writes.</p>
+                                <p>Generates ioctl functions. See <a href="sys/ioctl/index.html">::sys::ioctl</a>.</p>
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -203,13 +168,6 @@ defined in.</p>
                            <td class='docblock-short'>
                                 <p>Nix Error Type</p>
                            </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.c_void.html"
-                                  title='enum nix::c_void'>c_void</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -225,13 +183,6 @@ defined in.</p>
                                   title='type nix::Result'>Result</a></td>
                            <td class='docblock-short'>
                                 <p>Nix Result Type</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="type" href="type.c_int.html"
-                                  title='type nix::c_int'>c_int</a></td>
-                           <td class='docblock-short'>
-                                
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -250,13 +201,15 @@ defined in.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
