@@ -1,7 +1,5 @@
 (function() {var implementors = {};
-implementors["libc"] = [];
-implementors["nix"] = ["impl&lt;'a&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/convert/trait.Into.html\" title=\"trait core::convert::Into\">Into</a>&lt;&amp;'a mut <a class=\"struct\" href=\"nix/sys/epoll/struct.EpollEvent.html\" title=\"struct nix::sys::epoll::EpollEvent\">EpollEvent</a>&gt; for <a class=\"enum\" href=\"https://doc.rust-lang.org/nightly/core/option/enum.Option.html\" title=\"enum core::option::Option\">Option</a>&lt;&amp;'a mut <a class=\"struct\" href=\"nix/sys/epoll/struct.EpollEvent.html\" title=\"struct nix::sys::epoll::EpollEvent\">EpollEvent</a>&gt;",];
-implementors["void"] = [];
+implementors["nix"] = [{text:"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/convert/trait.Into.html\" title=\"trait core::convert::Into\">Into</a>&lt;<a class=\"struct\" href=\"libc/unix/notbsd/linux/struct.ucred.html\" title=\"struct libc::unix::notbsd::linux::ucred\">ucred</a>&gt; for <a class=\"struct\" href=\"nix/sys/socket/struct.UnixCredentials.html\" title=\"struct nix::sys::socket::UnixCredentials\">UnixCredentials</a>",synthetic:false,types:["nix::sys::socket::UnixCredentials"]},];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

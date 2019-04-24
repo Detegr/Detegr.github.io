@@ -1,5 +1,4 @@
 (function() {var implementors = {};
-implementors["nix"] = [];
 implementors["void"] = [];
 
             if (window.register_implementors) {
