@@ -1,7 +1,9 @@
 var ALIASES = {};
 ALIASES["bitflags"] = {};
+ALIASES["byteorder"] = {};
 ALIASES["cfg_if"] = {};
 ALIASES["ctrlc"] = {};
+ALIASES["lazy_static"] = {};
 ALIASES["libc"] = {};
 ALIASES["nix"] = {};
 ALIASES["void"] = {};

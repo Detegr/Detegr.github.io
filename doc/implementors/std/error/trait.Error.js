@@ -1,12 +1,5 @@
 (function() {var implementors = {};
-implementors["ctrlc"] = [{text:"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"enum\" href=\"ctrlc/enum.Error.html\" title=\"enum ctrlc::Error\">Error</a>",synthetic:false,types:["ctrlc::error::Error"]},];
-implementors["nix"] = [{text:"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"enum\" href=\"nix/errno/enum.Errno.html\" title=\"enum nix::errno::Errno\">Errno</a>",synthetic:false,types:["nix::errno::consts::Errno"]},{text:"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"enum\" href=\"nix/enum.Error.html\" title=\"enum nix::Error\">Error</a>",synthetic:false,types:["nix::Error"]},];
+implementors["ctrlc"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"enum\" href=\"ctrlc/enum.Error.html\" title=\"enum ctrlc::Error\">Error</a>","synthetic":false,"types":["ctrlc::error::Error"]}];
+implementors["nix"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"struct\" href=\"nix/env/struct.ClearEnvError.html\" title=\"struct nix::env::ClearEnvError\">ClearEnvError</a>","synthetic":false,"types":["nix::env::ClearEnvError"]},{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"enum\" href=\"nix/errno/enum.Errno.html\" title=\"enum nix::errno::Errno\">Errno</a>","synthetic":false,"types":["nix::errno::consts::Errno"]}];
 implementors["void"] = [{text:"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"enum\" href=\"void/enum.Void.html\" title=\"enum void::Void\">Void</a>",synthetic:false,types:["void::Void"]},];
-
-            if (window.register_implementors) {
-                window.register_implementors(implementors);
-            } else {
-                window.pending_implementors = implementors;
-            }
-        
-})()
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
