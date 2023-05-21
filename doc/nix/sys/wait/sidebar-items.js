@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["WaitStatus","Possible return values from `wait()` or `waitpid()`."]],"fn":[["wait",""],["waitpid",""]],"struct":[["WaitPidFlag",""]]});
+window.SIDEBAR_ITEMS = {"enum":["Id","WaitStatus"],"fn":["wait","waitid","waitpid"],"struct":["WaitPidFlag"]};

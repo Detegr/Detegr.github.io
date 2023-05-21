@@ -1,11 +1,9 @@
-var N = null;var sourcesIndex = {};
-sourcesIndex["bitflags"] = {"name":"","files":["lib.rs"]};
-sourcesIndex["byteorder"] = {"name":"","files":["io.rs","lib.rs"]};
-sourcesIndex["cfg_if"] = {"name":"","files":["lib.rs"]};
-sourcesIndex["ctrlc"] = {"name":"","dirs":[{"name":"platform","dirs":[{"name":"unix","files":["mod.rs"]}],"files":["mod.rs"]}],"files":["error.rs","lib.rs","signal.rs"]};
-sourcesIndex["lazy_static"] = {"name":"","files":["inline_lazy.rs","lib.rs"]};
-sourcesIndex["libc"] = {"name":"","dirs":[{"name":"unix","dirs":[{"name":"linux_like","dirs":[{"name":"linux","dirs":[{"name":"arch","dirs":[{"name":"generic","files":["mod.rs"]}],"files":["mod.rs"]},{"name":"gnu","dirs":[{"name":"b64","dirs":[{"name":"x86_64","files":["align.rs","mod.rs","not_x32.rs"]}],"files":["mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["mod.rs"]}],"files":["align.rs","mod.rs"]}],"files":["fixed_width_ints.rs","lib.rs","macros.rs"]};
-sourcesIndex["memoffset"] = {"name":"","files":["lib.rs","offset_of.rs","raw_field.rs","span_of.rs"]};
-sourcesIndex["nix"] = {"name":"","dirs":[{"name":"mount","files":["linux.rs","mod.rs"]},{"name":"net","files":["if_.rs","mod.rs"]},{"name":"sys","dirs":[{"name":"ioctl","files":["linux.rs","mod.rs"]},{"name":"ptrace","files":["linux.rs","mod.rs"]},{"name":"socket","files":["addr.rs","mod.rs","sockopt.rs"]}],"files":["aio.rs","epoll.rs","eventfd.rs","inotify.rs","memfd.rs","mman.rs","mod.rs","personality.rs","pthread.rs","quota.rs","reboot.rs","select.rs","sendfile.rs","signal.rs","signalfd.rs","stat.rs","statfs.rs","statvfs.rs","sysinfo.rs","termios.rs","time.rs","timerfd.rs","uio.rs","utsname.rs","wait.rs"]}],"files":["dir.rs","env.rs","errno.rs","fcntl.rs","features.rs","ifaddrs.rs","kmod.rs","lib.rs","macros.rs","mqueue.rs","poll.rs","pty.rs","sched.rs","time.rs","ucontext.rs","unistd.rs"]};
-sourcesIndex["void"] = {"name":"","files":["lib.rs"]};
+var sourcesIndex = JSON.parse('{\
+"bitflags":["",[],["lib.rs"]],\
+"cfg_if":["",[],["lib.rs"]],\
+"ctrlc":["",[["platform",[["unix",[],["mod.rs"]]],["mod.rs"]]],["error.rs","lib.rs","signal.rs"]],\
+"libc":["",[["unix",[["linux_like",[["linux",[["arch",[["generic",[],["mod.rs"]]],["mod.rs"]],["gnu",[["b64",[["x86_64",[],["align.rs","mod.rs","not_x32.rs"]]],["mod.rs"]]],["align.rs","mod.rs"]]],["align.rs","mod.rs","non_exhaustive.rs"]]],["mod.rs"]]],["align.rs","mod.rs"]]],["fixed_width_ints.rs","lib.rs","macros.rs"]],\
+"nix":["",[["sys",[],["memfd.rs","mod.rs","signal.rs","signalfd.rs","stat.rs","statfs.rs","statvfs.rs","sysinfo.rs","time.rs","wait.rs"]]],["errno.rs","fcntl.rs","lib.rs","macros.rs","unistd.rs"]],\
+"static_assertions":["",[],["assert_cfg.rs","assert_eq_align.rs","assert_eq_size.rs","assert_fields.rs","assert_impl.rs","assert_obj_safe.rs","assert_trait.rs","assert_type.rs","const_assert.rs","lib.rs"]]\
+}');
 createSourceSidebar();

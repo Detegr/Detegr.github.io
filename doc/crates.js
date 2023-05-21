@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["bitflags","byteorder","cfg_if","ctrlc","lazy_static","libc","memoffset","nix"];
+window.ALL_CRATES = ["bitflags","cfg_if","ctrlc","libc","nix","static_assertions"];
