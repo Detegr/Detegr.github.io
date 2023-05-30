@@ -174,6 +174,9 @@
 <a href="#174" id="174">174</a>
 <a href="#175" id="175">175</a>
 <a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright (c) 2017 CtrlC developers
 // Licensed under the Apache License, Version 2.0
 // &lt;LICENSE-APACHE or
@@ -259,7 +262,7 @@
 /// Will return an error if a system error occurred.
 ///
 </span><span class="attr">#[inline]
-</span><span class="kw">pub unsafe fn </span>init_os_handler() -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
+</span><span class="kw">pub unsafe fn </span>init_os_handler(overwrite: bool) -&gt; <span class="prelude-ty">Result</span>&lt;(), Error&gt; {
     <span class="kw">use </span>nix::fcntl;
     <span class="kw">use </span>nix::sys::signal;
 
@@ -289,7 +292,8 @@
         <span class="prelude-val">Ok</span>(old) =&gt; old,
         <span class="prelude-val">Err</span>(e) =&gt; <span class="kw">return </span><span class="prelude-val">Err</span>(close_pipe(e)),
     };
-    <span class="kw">if </span>sigint_old.handler() != signal::SigHandler::SigDfl {
+    <span class="kw">if </span>!overwrite &amp;&amp; sigint_old.handler() != signal::SigHandler::SigDfl {
+        signal::sigaction(signal::Signal::SIGINT, <span class="kw-2">&amp;</span>sigint_old).unwrap();
         <span class="kw">return </span><span class="prelude-val">Err</span>(close_pipe(nix::Error::EEXIST));
     }
 
@@ -302,8 +306,9 @@
                 <span class="kw">return </span><span class="prelude-val">Err</span>(close_pipe(e));
             }
         };
-        <span class="kw">if </span>sigterm_old.handler() != signal::SigHandler::SigDfl {
+        <span class="kw">if </span>!overwrite &amp;&amp; sigterm_old.handler() != signal::SigHandler::SigDfl {
             signal::sigaction(signal::Signal::SIGINT, <span class="kw-2">&amp;</span>sigint_old).unwrap();
+            signal::sigaction(signal::Signal::SIGTERM, <span class="kw-2">&amp;</span>sigterm_old).unwrap();
             <span class="kw">return </span><span class="prelude-val">Err</span>(close_pipe(nix::Error::EEXIST));
         }
         <span class="kw">let </span>sighup_old = <span class="kw">match </span>signal::sigaction(signal::Signal::SIGHUP, <span class="kw-2">&amp;</span>new_action) {
@@ -314,9 +319,10 @@
                 <span class="kw">return </span><span class="prelude-val">Err</span>(close_pipe(e));
             }
         };
-        <span class="kw">if </span>sighup_old.handler() != signal::SigHandler::SigDfl {
+        <span class="kw">if </span>!overwrite &amp;&amp; sighup_old.handler() != signal::SigHandler::SigDfl {
             signal::sigaction(signal::Signal::SIGINT, <span class="kw-2">&amp;</span>sigint_old).unwrap();
             signal::sigaction(signal::Signal::SIGTERM, <span class="kw-2">&amp;</span>sigterm_old).unwrap();
+            signal::sigaction(signal::Signal::SIGHUP, <span class="kw-2">&amp;</span>sighup_old).unwrap();
             <span class="kw">return </span><span class="prelude-val">Err</span>(close_pipe(nix::Error::EEXIST));
         }
     }
